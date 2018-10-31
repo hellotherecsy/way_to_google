@@ -18,9 +18,9 @@ library(imager)
 source('http://www.sthda.com/upload/rquery_wordcloud.r')
 
 ## Data import  
-jobs <- read.csv("../data/google_jobs.csv", header = TRUE)
-geo_info <- read.csv("../data/geo_info.csv", header = TRUE)
-continent_info <- read.csv("../data/continent_info.csv", header = TRUE)
+jobs <- read.csv("./data/google_jobs.csv", header = TRUE)
+geo_info <- read.csv("./data/geo_info.csv", header = TRUE)
+continent_info <- read.csv("./data/continent_info.csv", header = TRUE)
 
 names(geo_info) <- c('X','city', 'lon', 'lat')
 geo_info <- subset(geo_info, select = -c(X))

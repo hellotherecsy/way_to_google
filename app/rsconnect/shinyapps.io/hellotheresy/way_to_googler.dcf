@@ -1,0 +1,12 @@
+name: way_to_googler
+title: way_to_googler
+username:
+account: hellotheresy
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 544042
+bundleId: 1673280
+url: https://hellotheresy.shinyapps.io/way_to_googler/
+when: 1540950148.21262
+asMultiple: FALSE
+asStatic: FALSE
