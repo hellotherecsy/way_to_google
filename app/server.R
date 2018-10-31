@@ -48,10 +48,6 @@ server <- function(input, output) {
     } else (
       jobs %>% select( ., Preferred.Qualifications ) 
     )  
-    
-       #jobs   %>% select( ., input$wc_in ) 
-    #jobs[jobs$Category1 == input$cat1,]
-     #  jobs  %>% select( ., Responsibilities ) %>% 
   })
   
   
@@ -69,13 +65,6 @@ server <- function(input, output) {
                                             paste0('<b>',city,'</b>') ,
                                             paste0('Job count : ',sum_of_jobs) 
       ))
-    # %>%
-    #   addCircles(lng = ~lon, lat = ~lat, weight = 1, color = 'brown' ,
-    #              radius = ~sqrt(sum_of_jobs) * 20000, 
-    #              popup = ~paste(sep = "<br/>",
-    #                              city ,
-    #                              paste0('Job count : ',sum_of_jobs) 
-    #                             ))
   })
   
   # Show popup on click
@@ -201,18 +190,7 @@ server <- function(input, output) {
     
     jobs$Minimum.Qualifications <- tolower(jobs$Minimum.Qualifications)
     jobs$Preferred.Qualifications <- tolower(jobs$Preferred.Qualifications)
-    
   
-    
-   #  lan_temp <- exp_reactive()
-   # #lan_temp <- domain_reactive()  
-   # 
-   #  if(input$req_domain == 'All') {
-   #    lan_temp <- jobs
-   #  } else (
-   #    lan_temp <- jobs %>% filter(., domain ==input$req_domain )
-   #  )
-    
     jobs <- exp_reactive() 
     
     if(input$req_domain == 'All') {
@@ -237,12 +215,10 @@ server <- function(input, output) {
     lanquage_cnt$cnt <- as.numeric(as.character(lanquage_cnt$cnt))
     lanquage_cnt$language <- factor(lanquage_cnt$language,
                                     levels = lanquage_cnt$language[order(-lanquage_cnt$cnt,decreasing = TRUE)])
-    
-    
-    
+
     ## pie chart count
     pie <- plot_ly(lanquage_cnt, labels = ~language, values = ~cnt, type = 'pie') %>%
-      layout(title = 'Google Job Composition',
+      layout(title = 'Domain Unit Language Status',
              xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
              yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
     pie <- ggplotly(pie, height = 350, width=600)  
@@ -259,11 +235,10 @@ server <- function(input, output) {
     } else (
       jobs <- filter(jobs, domain ==input$req_domain )
     )
-    
-    
+
     p2 <- ggplot(jobs, aes(x=domain, y=experience, fill=domain)) + geom_boxplot() +
       coord_flip() +
-      ggtitle('box plot per domain')
+      ggtitle('Domain per Exp ')
     p2 <- ggplotly(p2)
     p2
     
@@ -272,46 +247,17 @@ server <- function(input, output) {
   
   output$word_cloud <- renderPlot({ 
     wc_df <- wc_reactive()
-    #wc_df <- jobs[input$wc_in,]
-   
-     ## Calculate Corpus
-    # Corpus<-Corpus(VectorSource(wc_df))
-    # 
-    # Clean<-tm_map(Corpus, PlainTextDocument)
-    # Clean<-tm_map(Corpus,tolower)
-    # Clean<-tm_map(Clean,removeNumbers)
-    # Clean<-tm_map(Clean,removeWords,stopwords("english"))
-    # Clean<-tm_map(Clean,removePunctuation)
-    # Clean<-tm_map(Clean,stripWhitespace)
-    # Clean<-tm_map(Clean,stemDocument)
-    # 
-    # wordcloud(words = Clean, min.freq = 1,
-    #           max.words=100, random.order=FALSE, rot.per=0.35, 
-    #           colors=brewer.pal(8, "Dark2"))
-    # 
-    # 
-    #print(input$wc_in)
-    library(data.table)
-   
-    a1 <- jobs$Responsibilities 
+  
+    #a1 <- jobs$Responsibilities 
     a2 <- as.matrix(wc_df)[,]
-    
-    print(str(a1))
-    #print(str(a2   ))
-    
-    #wc_df <- jobs$Responsibilities
-    #wc_df <- as.factor(wc_df)
+  
     wc <- rquery.wordcloud(a2, type=c("text", "url", "file"),
                      lang="english", excludeWords = NULL,
                      textStemming = FALSE,  colorPalette="Dark2",
-                     max.words=100, min.freq =10 )
-    wc
+                     max.words=100, min.freq =10   )
     
-    # wc <- load.image(paste0('./wc/','Preferred.Qualifications','.png'))
-    # 
-    # plot(wc)
-    # wc
-    })
+    wc
+    } , width = "auto", height = "auto", res=130 )
  
   # (3) Table Explorer
   output$table <- DT::renderDataTable(DT::datatable({

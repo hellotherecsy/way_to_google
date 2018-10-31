@@ -2,7 +2,7 @@
 
 ui <- dashboardPage(
   skin = 'red',
-  dashboardHeader(title = "Way to Google!" ),
+  dashboardHeader(title = "Way to Googler!" ),
   
   dashboardSidebar(
     sidebarMenu(
@@ -87,7 +87,7 @@ ui <- dashboardPage(
                                                  )
                          )),
                   column(7,
-                         plotOutput("word_cloud")) 
+                         plotOutput("word_cloud", width = 700, height = 700)) 
                   )
                 )
       ),
